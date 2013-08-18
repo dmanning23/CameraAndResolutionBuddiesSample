@@ -25,6 +25,11 @@ namespace CameraAndResolutionBuddiesSample
 		Circle _circle1;
 		Circle _circle2;
 
+		/// <summary>
+		/// flag to tell if the circles are colliding
+		/// </summary>
+		bool _colliding = false;
+
 		GameClock _clock;
 
 		InputState _inputState;
@@ -64,7 +69,7 @@ namespace CameraAndResolutionBuddiesSample
 			Resolution.SetDesiredResolution(1280, 720);
 
 			//Resolution.SetScreenResolution(480, 800, false);
-			Resolution.SetScreenResolution(1920, 1080, true);
+			Resolution.SetScreenResolution(800, 600, true);
 		}
 
 		/// <summary>
@@ -77,10 +82,15 @@ namespace CameraAndResolutionBuddiesSample
 		{
 			//init the blue circle so it will be on the left of the screen
 			_circle1.Initialize(new Vector2(graphics.GraphicsDevice.Viewport.TitleSafeArea.Center.X - 300,
-			                                graphics.GraphicsDevice.Viewport.TitleSafeArea.Center.Y), 80.0f);
+			                                graphics.GraphicsDevice.Viewport.TitleSafeArea.Center.Y), 60.0f);
 
 			//put the red circle on the right of the screen
-			_circle2.Initialize(graphics.GraphicsDevice.Viewport.TitleSafeArea.Center, 40.0f);
+			_circle2.Initialize(graphics.GraphicsDevice.Viewport.TitleSafeArea.Center, 60.0f);
+
+			//Initiailze the camera to start with everything on screen
+			AddCircleToCamera(_circle1);
+			AddCircleToCamera(_circle2);
+			_camera.BeginScene(true);
 
 			_clock.Start();
 
@@ -126,7 +136,7 @@ namespace CameraAndResolutionBuddiesSample
 			_inputWrapper.Update(_inputState, false);
 
 			//move the circle
-			float movespeed = 1600.0f;
+			float movespeed = 600.0f;
 
 			//check veritcal movement
 			if (_inputWrapper.Controller.KeystrokeHeld[(int)EKeystroke.Up])
@@ -148,10 +158,18 @@ namespace CameraAndResolutionBuddiesSample
 				_circle1.Translate(-movespeed * _clock.TimeDelta, 0.0f);
 			}
 
-			//add camera shake?
-			if (_inputWrapper.Controller.KeystrokePress[(int)EKeystroke.A])
+			//add camera shake when the two circles crash into each other
+			if (CollisionCheck.CircleCircleCollision(_circle1, _circle2))
 			{
-				_camera.AddCameraShake(0.5f);
+				if (!_colliding)
+				{
+					_camera.AddCameraShake(0.25f);
+				}
+				_colliding = true;
+			}
+			else
+			{
+				_colliding = false;
 			}
 
 			//update the camera
@@ -169,8 +187,8 @@ namespace CameraAndResolutionBuddiesSample
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
 			//Add all our points to the camera
-			_camera.AddPoint(_circle1.Pos);
-			_camera.AddPoint(_circle2.Pos);
+			AddCircleToCamera(_circle1);
+			AddCircleToCamera(_circle2);
 
 			//update all the matrices of the camera before we start drawing
 			_camera.BeginScene(false);
@@ -196,6 +214,14 @@ namespace CameraAndResolutionBuddiesSample
 			spriteBatch.End();
 
 			base.Draw(gameTime);
+		}
+
+		private void AddCircleToCamera(Circle myCircle)
+		{
+			//Add the upperleft and lowercorners.  That will fit the whole circle in camera
+			_camera.AddPoint(myCircle.Pos);
+			_camera.AddPoint(new Vector2((myCircle.Pos.X - myCircle.Radius), (myCircle.Pos.Y - myCircle.Radius)));
+			_camera.AddPoint(new Vector2((myCircle.Pos.X + myCircle.Radius), (myCircle.Pos.Y + myCircle.Radius)));
 		}
 
 		#endregion //Members
