@@ -43,6 +43,8 @@ namespace CameraAndResolutionBuddiesSample
 		Texture2D _texture;
 		BasicPrimitive titlesafe;
 
+		Rectangle desired = new Rectangle(0,0,1280, 720);
+
 		#endregion //Members
 
 		#region Methods
@@ -61,15 +63,17 @@ namespace CameraAndResolutionBuddiesSample
 			_inputWrapper = new InputWrapper(PlayerIndex.One, _clock.GetCurrentTime);
 			_inputWrapper.Controller.UseKeyboard = true;
 
-			//set up the camera
-			_camera = new Camera();
-			_camera.WorldBoundary = new Rectangle(0, 0, 1280, 720);
 
 			Resolution.Init(ref graphics);
-			Resolution.SetDesiredResolution(1280, 720);
+			Resolution.SetDesiredResolution(desired.Width, desired.Height);
 
 			//Resolution.SetScreenResolution(480, 800, false);
-			Resolution.SetScreenResolution(800, 600, true);
+			Resolution.SetScreenResolution(854, 480, false);
+
+			//set up the camera
+			_camera = new Camera();
+			_camera.SetScreenRects(desired, Resolution.TitleSafeArea);
+			_camera.WorldBoundary = desired;
 		}
 
 		/// <summary>
@@ -107,9 +111,6 @@ namespace CameraAndResolutionBuddiesSample
 
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-
-			//Setup all the rectangles used by the camera
-			_camera.SetScreenRects(graphics.GraphicsDevice.Viewport.Bounds, graphics.GraphicsDevice.Viewport.TitleSafeArea);
 
 			_texture = Content.Load<Texture2D>("Braid_screenshot8");
 		}
@@ -197,7 +198,7 @@ namespace CameraAndResolutionBuddiesSample
 				SpriteSortMode.Deferred,
 				BlendState.NonPremultiplied,
 				null, null, null, null,
-				_camera.TranslationMatrix);
+				_camera.TranslationMatrix * Resolution.TransformationMatrix());
 
 			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 
@@ -209,6 +210,15 @@ namespace CameraAndResolutionBuddiesSample
 			circlePrim = new BasicPrimitive(graphics.GraphicsDevice);
 			circlePrim.Circle(_circle2.Pos, _circle2.Radius, Color.Red, spriteBatch);
 
+			spriteBatch.End();
+
+			//Draw our gui!
+			spriteBatch.Begin(
+				SpriteSortMode.Deferred,
+				BlendState.NonPremultiplied,
+				null, null, null, null,
+				Resolution.TransformationMatrix());
+
 			titlesafe.Rectangle(Resolution.TitleSafeArea, Color.Red, spriteBatch);
 
 			spriteBatch.End();
@@ -218,10 +228,12 @@ namespace CameraAndResolutionBuddiesSample
 
 		private void AddCircleToCamera(Circle myCircle)
 		{
+			float pad = (myCircle.Radius * 1.5f); //add a bit of padding so they aren't touching the edge of the screen
+
 			//Add the upperleft and lowercorners.  That will fit the whole circle in camera
 			_camera.AddPoint(myCircle.Pos);
-			_camera.AddPoint(new Vector2((myCircle.Pos.X - myCircle.Radius), (myCircle.Pos.Y - myCircle.Radius)));
-			_camera.AddPoint(new Vector2((myCircle.Pos.X + myCircle.Radius), (myCircle.Pos.Y + myCircle.Radius)));
+			_camera.AddPoint(new Vector2((myCircle.Pos.X - pad), (myCircle.Pos.Y - pad)));
+			_camera.AddPoint(new Vector2((myCircle.Pos.X + pad), (myCircle.Pos.Y + pad)));
 		}
 
 		#endregion //Members
