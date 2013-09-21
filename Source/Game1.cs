@@ -41,7 +41,7 @@ namespace CameraAndResolutionBuddiesSample
 		Camera _camera;
 
 		Texture2D _texture;
-		BasicPrimitive titlesafe;
+		XNABasicPrimitive titlesafe;
 
 		Rectangle desired = new Rectangle(0,0,1280, 720);
 
@@ -67,8 +67,7 @@ namespace CameraAndResolutionBuddiesSample
 			Resolution.Init(ref graphics);
 			Resolution.SetDesiredResolution(desired.Width, desired.Height);
 
-			//Resolution.SetScreenResolution(480, 800, false);
-			Resolution.SetScreenResolution(854, 480, false);
+			Resolution.SetScreenResolution(800, 600, false);
 
 			//set up the camera
 			_camera = new Camera();
@@ -107,11 +106,9 @@ namespace CameraAndResolutionBuddiesSample
 		/// </summary>
 		protected override void LoadContent()
 		{
-			titlesafe = new BasicPrimitive(graphics.GraphicsDevice);
-
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-
+			titlesafe = new XNABasicPrimitive(graphics.GraphicsDevice, spriteBatch);
 			_texture = Content.Load<Texture2D>("Braid_screenshot8");
 		}
 
@@ -187,6 +184,11 @@ namespace CameraAndResolutionBuddiesSample
 		{
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
+#if WINDOWS
+			// Calculate Proper Viewport according to Aspect Ratio
+			Resolution.ResetViewport();
+#endif
+
 			//Add all our points to the camera
 			AddCircleToCamera(_circle1);
 			AddCircleToCamera(_circle2);
@@ -203,12 +205,10 @@ namespace CameraAndResolutionBuddiesSample
 			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 
 			//draw the players circle in green
-			BasicPrimitive circlePrim = new BasicPrimitive(graphics.GraphicsDevice);
-			circlePrim.Circle(_circle1.Pos, _circle1.Radius, Color.Green, spriteBatch);
+			titlesafe.Circle(_circle1.Pos, _circle1.Radius, Color.Green);
 
 			//draw the stationary circle in red
-			circlePrim = new BasicPrimitive(graphics.GraphicsDevice);
-			circlePrim.Circle(_circle2.Pos, _circle2.Radius, Color.Red, spriteBatch);
+			titlesafe.Circle(_circle2.Pos, _circle2.Radius, Color.Red);
 
 			spriteBatch.End();
 
@@ -219,7 +219,7 @@ namespace CameraAndResolutionBuddiesSample
 				null, null, null, null,
 				Resolution.TransformationMatrix());
 
-			titlesafe.Rectangle(Resolution.TitleSafeArea, Color.Red, spriteBatch);
+			titlesafe.Rectangle(Resolution.TitleSafeArea, Color.Red);
 
 			spriteBatch.End();
 
