@@ -7,7 +7,7 @@ using CameraBuddy;
 using GameTimer;
 using CollisionBuddy;
 using HadoukInput;
-using BasicPrimitiveBuddy;
+using PrimitiveBuddy;
 using ResolutionBuddy;
 
 namespace CameraAndResolutionBuddiesSample
@@ -33,6 +33,7 @@ namespace CameraAndResolutionBuddiesSample
 		GameClock _clock;
 
 		InputState _inputState;
+		ControllerWrapper _controller;
 		InputWrapper _inputWrapper;
 
 		/// <summary>
@@ -41,9 +42,9 @@ namespace CameraAndResolutionBuddiesSample
 		Camera _camera;
 
 		Texture2D _texture;
-		XNABasicPrimitive titlesafe;
+		Primitive titlesafe;
 
-		Rectangle desired = new Rectangle(0,0,1280, 720);
+		Rectangle desired = new Rectangle(0, 0, 1280, 720);
 
 		#endregion //Members
 
@@ -60,18 +61,19 @@ namespace CameraAndResolutionBuddiesSample
 
 			_clock = new GameClock();
 			_inputState = new InputState();
-			_inputWrapper = new InputWrapper(PlayerIndex.One, _clock.GetCurrentTime);
+			_controller = new ControllerWrapper(PlayerIndex.One, true);
+			_inputWrapper = new InputWrapper(_controller, _clock.GetCurrentTime);
 			_inputWrapper.Controller.UseKeyboard = true;
 
 
-			Resolution.Init(ref graphics);
+			Resolution.Init(graphics);
 			Resolution.SetDesiredResolution(desired.Width, desired.Height);
 
-			Resolution.SetScreenResolution(800, 600, false);
+			Resolution.SetScreenResolution(1280, 720, false);
 
 			//set up the camera
 			_camera = new Camera();
-			_camera.SetScreenRects(desired, Resolution.TitleSafeArea);
+			//_camera.SetScreenRects(desired, Resolution.TitleSafeArea);
 			_camera.WorldBoundary = desired;
 		}
 
@@ -108,7 +110,7 @@ namespace CameraAndResolutionBuddiesSample
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-			titlesafe = new XNABasicPrimitive(graphics.GraphicsDevice, spriteBatch);
+			titlesafe = new Primitive(graphics.GraphicsDevice, spriteBatch);
 			_texture = Content.Load<Texture2D>("Braid_screenshot8");
 		}
 
@@ -123,7 +125,9 @@ namespace CameraAndResolutionBuddiesSample
 			if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) || 
 			    Keyboard.GetState().IsKeyDown(Keys.Escape))
 			{
+#if !__IOS__
 				this.Exit();
+#endif
 			}
 
 			//update the timer
@@ -137,21 +141,21 @@ namespace CameraAndResolutionBuddiesSample
 			float movespeed = 600.0f;
 
 			//check veritcal movement
-			if (_inputWrapper.Controller.KeystrokeHeld[(int)EKeystroke.Up])
+			if (_inputWrapper.Controller.CheckKeystrokeHeld(EKeystroke.Up))
 			{
 				_circle1.Translate(0.0f, -movespeed * _clock.TimeDelta);
 			}
-			else if (_inputWrapper.Controller.KeystrokeHeld[(int)EKeystroke.Down])
+			else if (_inputWrapper.Controller.CheckKeystrokeHeld(EKeystroke.Down))
 			{
 				_circle1.Translate(0.0f, movespeed * _clock.TimeDelta);
 			}
 
 			//check horizontal movement
-			if (_inputWrapper.Controller.KeystrokeHeld[(int)EKeystroke.Forward])
+			if (_inputWrapper.Controller.CheckKeystrokeHeld(EKeystroke.Forward))
 			{
 				_circle1.Translate(movespeed * _clock.TimeDelta, 0.0f);
 			}
-			else if (_inputWrapper.Controller.KeystrokeHeld[(int)EKeystroke.Back])
+			else if (_inputWrapper.Controller.CheckKeystrokeHeld(EKeystroke.Back))
 			{
 				_circle1.Translate(-movespeed * _clock.TimeDelta, 0.0f);
 			}
