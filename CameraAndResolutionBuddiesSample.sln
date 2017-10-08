@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraAndResolutionBuddiesSample.DesktopGL", "CameraAndResolutionBuddiesSample.DesktopGL\CameraAndResolutionBuddiesSample.DesktopGL.csproj", "{631111F0-539B-4BDE-86EB-EEBDD9826057}"
 EndProject
@@ -15,11 +15,11 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CameraAndResolutionBuddiesS
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{987f669f-441c-4ff6-b6a6-1883e20690d6}*SharedItemsImports = 4
-		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{631111f0-539b-4bde-86eb-eebdd9826057}*SharedItemsImports = 4
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{0b8b68c1-881f-4429-9f7e-a9a58c6c2ee0}*SharedItemsImports = 4
-		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{99920e40-440f-4fee-a972-bb53d56577dc}*SharedItemsImports = 4
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{10ff7366-a20b-4a88-9e38-cf4707e7ac37}*SharedItemsImports = 13
+		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{631111f0-539b-4bde-86eb-eebdd9826057}*SharedItemsImports = 4
+		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{987f669f-441c-4ff6-b6a6-1883e20690d6}*SharedItemsImports = 4
+		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{99920e40-440f-4fee-a972-bb53d56577dc}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -72,7 +72,8 @@ Global
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.AppStore|x64.Build.0 = Release|x86
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.AppStore|x86.ActiveCfg = Release|x86
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.AppStore|x86.Build.0 = Release|x86
-		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|ARM.ActiveCfg = Debug|x86
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|iPhone.ActiveCfg = Debug|x86
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|iPhoneSimulator.ActiveCfg = Debug|x86

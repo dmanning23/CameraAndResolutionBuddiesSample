@@ -65,11 +65,11 @@ namespace CameraAndResolutionBuddiesSample
 			_inputWrapper = new InputWrapper(_controller, _clock.GetCurrentTime);
 			_inputWrapper.Controller.UseKeyboard = true;
 
-
-			Resolution.Init(graphics);
-			Resolution.SetDesiredResolution(desired.Width, desired.Height);
-
-			Resolution.SetScreenResolution(1280, 720, false);
+#if DESKTOP
+			var resolution = new ResolutionComponent(this, graphics, new Point(1280, 720), new Point(1280, 720), false, true);
+#else
+			var resolution = new ResolutionComponent(this, graphics, new Point(1280, 720), new Point(1280, 720), false, true);
+#endif
 
 			//set up the camera
 			_camera = new Camera();
@@ -85,6 +85,8 @@ namespace CameraAndResolutionBuddiesSample
 		/// </summary>
 		protected override void Initialize()
 		{
+			base.Initialize();
+
 			//init the blue circle so it will be on the left of the screen
 			_circle1.Initialize(new Vector2(graphics.GraphicsDevice.Viewport.TitleSafeArea.Center.X - 300,
 			                                graphics.GraphicsDevice.Viewport.TitleSafeArea.Center.Y), 60.0f);
@@ -98,8 +100,6 @@ namespace CameraAndResolutionBuddiesSample
 			_camera.BeginScene(true);
 
 			_clock.Start();
-
-			base.Initialize();
 		}
 
 		/// <summary>
@@ -240,6 +240,6 @@ namespace CameraAndResolutionBuddiesSample
 			_camera.AddPoint(new Vector2((myCircle.Pos.X + pad), (myCircle.Pos.Y + pad)));
 		}
 
-		#endregion //Members
+#endregion //Members
 	}
 }
