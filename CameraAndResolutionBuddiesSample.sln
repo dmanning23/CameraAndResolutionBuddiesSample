@@ -13,11 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraAndResolutionBuddiesS
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CameraAndResolutionBuddiesSample.SharedProject", "CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.shproj", "{10FF7366-A20B-4A88-9E38-CF4707E7AC37}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CameraBuddy.SharedProject", "..\CameraBuddy\CameraBuddy\CameraBuddy.SharedProject\CameraBuddy.SharedProject.shproj", "{3E9BE45A-7FE5-4FD0-8AF9-772817555C95}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{0b8b68c1-881f-4429-9f7e-a9a58c6c2ee0}*SharedItemsImports = 4
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{10ff7366-a20b-4a88-9e38-cf4707e7ac37}*SharedItemsImports = 13
+		..\CameraBuddy\CameraBuddy\CameraBuddy.SharedProject\CameraBuddy.SharedProject.projitems*{3e9be45a-7fe5-4fd0-8af9-772817555c95}*SharedItemsImports = 13
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{631111f0-539b-4bde-86eb-eebdd9826057}*SharedItemsImports = 4
+		..\CameraBuddy\CameraBuddy\CameraBuddy.SharedProject\CameraBuddy.SharedProject.projitems*{631111f0-539b-4bde-86eb-eebdd9826057}*SharedItemsImports = 4
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{987f669f-441c-4ff6-b6a6-1883e20690d6}*SharedItemsImports = 4
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{99920e40-440f-4fee-a972-bb53d56577dc}*SharedItemsImports = 4
 	EndGlobalSection
@@ -75,7 +79,8 @@ Global
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|ARM.ActiveCfg = Debug|x86
-		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|iPhone.ActiveCfg = Debug|x86
+		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|iPhoneSimulator.ActiveCfg = Debug|x86
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|x64.ActiveCfg = Debug|x86
 		{631111F0-539B-4BDE-86EB-EEBDD9826057}.Debug|x86.ActiveCfg = Debug|x86
@@ -103,10 +108,11 @@ Global
 		{99920E40-440F-4FEE-A972-BB53D56577DC}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
 		{99920E40-440F-4FEE-A972-BB53D56577DC}.AppStore|x64.ActiveCfg = AppStore|iPhone
 		{99920E40-440F-4FEE-A972-BB53D56577DC}.AppStore|x86.ActiveCfg = AppStore|iPhone
-		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
 		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|ARM.ActiveCfg = Debug|iPhone
-		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|iPhone.Build.0 = Debug|iPhone
+		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|iPhone.ActiveCfg = Debug|iPhoneSimulator
+		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|iPhone.Build.0 = Debug|iPhoneSimulator
 		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{99920E40-440F-4FEE-A972-BB53D56577DC}.Debug|x64.ActiveCfg = Debug|iPhone

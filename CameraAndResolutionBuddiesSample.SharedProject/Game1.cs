@@ -9,6 +9,7 @@ using CollisionBuddy;
 using HadoukInput;
 using PrimitiveBuddy;
 using ResolutionBuddy;
+using MatrixExtensions;
 
 namespace CameraAndResolutionBuddiesSample
 {
@@ -42,7 +43,7 @@ namespace CameraAndResolutionBuddiesSample
 		Camera _camera;
 
 		Texture2D _texture;
-		Primitive titlesafe;
+		Primitive primitive;
 
 		Rectangle desired = new Rectangle(0, 0, 1280, 720);
 
@@ -73,7 +74,6 @@ namespace CameraAndResolutionBuddiesSample
 
 			//set up the camera
 			_camera = new Camera();
-			//_camera.SetScreenRects(desired, Resolution.TitleSafeArea);
 			_camera.WorldBoundary = desired;
 		}
 
@@ -110,7 +110,7 @@ namespace CameraAndResolutionBuddiesSample
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-			titlesafe = new Primitive(graphics.GraphicsDevice, spriteBatch);
+			primitive = new Primitive(graphics.GraphicsDevice, spriteBatch);
 			_texture = Content.Load<Texture2D>("Braid_screenshot8");
 		}
 
@@ -209,10 +209,10 @@ namespace CameraAndResolutionBuddiesSample
 			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 
 			//draw the players circle in green
-			titlesafe.Circle(_circle1.Pos, _circle1.Radius, Color.Green);
+			primitive.Circle(_circle1.Pos, _circle1.Radius, Color.Green);
 
 			//draw the stationary circle in red
-			titlesafe.Circle(_circle2.Pos, _circle2.Radius, Color.Red);
+			primitive.Circle(_circle2.Pos, _circle2.Radius, Color.Red);
 
 			spriteBatch.End();
 
@@ -223,11 +223,21 @@ namespace CameraAndResolutionBuddiesSample
 				null, null, null, null,
 				Resolution.TransformationMatrix());
 
-			titlesafe.Rectangle(Resolution.TitleSafeArea, Color.Red);
+			primitive.Rectangle(Resolution.TitleSafeArea, Color.Red);
+
+			//Draw the center of the circles as white dots
+			DrawCircleCenters();
 
 			spriteBatch.End();
 
 			base.Draw(gameTime);
+		}
+
+		public void DrawCircleCenters()
+		{
+			var centerPosition1 = MatrixExt.Multiply(_camera.TranslationMatrix, _circle1.Pos);
+			primitive.Rectangle(Resolution.TitleSafeArea, Color.Red);
+			primitive.Circle(centerPosition1, 64, Color.White);
 		}
 
 		private void AddCircleToCamera(Circle myCircle)
@@ -240,6 +250,6 @@ namespace CameraAndResolutionBuddiesSample
 			_camera.AddPoint(new Vector2((myCircle.Pos.X + pad), (myCircle.Pos.Y + pad)));
 		}
 
-#endregion //Members
+		#endregion //Methods
 	}
 }
