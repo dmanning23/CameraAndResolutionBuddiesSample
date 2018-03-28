@@ -150,15 +150,11 @@
   <ItemGroup>
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
-    <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Default.png" />
     <BundleResource Include="GameThumbnail.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\XmlBuddy.Content.dll" />
   </ItemGroup>
   <Import Project="..\CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

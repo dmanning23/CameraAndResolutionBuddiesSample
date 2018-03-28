@@ -117,13 +117,7 @@
     <AndroidResource Include="Resources\Values\Styles.xml" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\XmlBuddy.Content.dll" />
   </ItemGroup>
   <Import Project="..\CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
