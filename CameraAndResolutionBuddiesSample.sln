@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraAndResolutionBuddiesSample.DesktopGL", "CameraAndResolutionBuddiesSample.DesktopGL\CameraAndResolutionBuddiesSample.DesktopGL.csproj", "{631111F0-539B-4BDE-86EB-EEBDD9826057}"
 EndProject
@@ -13,15 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraAndResolutionBuddiesS
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CameraAndResolutionBuddiesSample.SharedProject", "CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.shproj", "{10FF7366-A20B-4A88-9E38-CF4707E7AC37}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CameraBuddy.SharedProject", "..\CameraBuddy\CameraBuddy\CameraBuddy.SharedProject\CameraBuddy.SharedProject.shproj", "{3E9BE45A-7FE5-4FD0-8AF9-772817555C95}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{0b8b68c1-881f-4429-9f7e-a9a58c6c2ee0}*SharedItemsImports = 4
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{10ff7366-a20b-4a88-9e38-cf4707e7ac37}*SharedItemsImports = 13
-		..\CameraBuddy\CameraBuddy\CameraBuddy.SharedProject\CameraBuddy.SharedProject.projitems*{3e9be45a-7fe5-4fd0-8af9-772817555c95}*SharedItemsImports = 13
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{631111f0-539b-4bde-86eb-eebdd9826057}*SharedItemsImports = 4
-		..\CameraBuddy\CameraBuddy\CameraBuddy.SharedProject\CameraBuddy.SharedProject.projitems*{631111f0-539b-4bde-86eb-eebdd9826057}*SharedItemsImports = 4
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{987f669f-441c-4ff6-b6a6-1883e20690d6}*SharedItemsImports = 4
 		CameraAndResolutionBuddiesSample.SharedProject\CameraAndResolutionBuddiesSample.SharedProject.projitems*{99920e40-440f-4fee-a972-bb53d56577dc}*SharedItemsImports = 4
 	EndGlobalSection
@@ -260,6 +256,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53F918A1-9F4B-4152-A7C7-25E687361307}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = CameraAndResolutionBuddiesSample.Windows.csproj

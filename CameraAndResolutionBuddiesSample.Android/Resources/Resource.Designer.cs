@@ -26,16 +26,10 @@ namespace CameraAndResolutionBuddiesSample.Android
 		
 		public static void UpdateIdValues()
 		{
-			global::CameraBuddy.Android.Resource.String.ApplicationName = global::CameraAndResolutionBuddiesSample.Android.Resource.String.ApplicationName;
-			global::CameraBuddy.Android.Resource.String.Hello = global::CameraAndResolutionBuddiesSample.Android.Resource.String.Hello;
 			global::CollisionBuddy.Android.Resource.String.ApplicationName = global::CameraAndResolutionBuddiesSample.Android.Resource.String.ApplicationName;
 			global::CollisionBuddy.Android.Resource.String.Hello = global::CameraAndResolutionBuddiesSample.Android.Resource.String.Hello;
-			global::FilenameBuddy.Android.Resource.String.ApplicationName = global::CameraAndResolutionBuddiesSample.Android.Resource.String.ApplicationName;
-			global::FilenameBuddy.Android.Resource.String.Hello = global::CameraAndResolutionBuddiesSample.Android.Resource.String.Hello;
 			global::GameTimer.Android.Resource.String.ApplicationName = global::CameraAndResolutionBuddiesSample.Android.Resource.String.ApplicationName;
 			global::GameTimer.Android.Resource.String.Hello = global::CameraAndResolutionBuddiesSample.Android.Resource.String.Hello;
-			global::HadoukInput.Android.Resource.String.ApplicationName = global::CameraAndResolutionBuddiesSample.Android.Resource.String.ApplicationName;
-			global::HadoukInput.Android.Resource.String.Hello = global::CameraAndResolutionBuddiesSample.Android.Resource.String.Hello;
 			global::MatrixExtensions.Android.Resource.String.ApplicationName = global::CameraAndResolutionBuddiesSample.Android.Resource.String.ApplicationName;
 			global::MatrixExtensions.Android.Resource.String.Hello = global::CameraAndResolutionBuddiesSample.Android.Resource.String.Hello;
 			global::PrimitiveBuddy.Android.Resource.String.ApplicationName = global::CameraAndResolutionBuddiesSample.Android.Resource.String.ApplicationName;

@@ -1,15 +1,13 @@
-using System;
+using CameraBuddy;
+using CollisionBuddy;
+using GameTimer;
+using HadoukInput;
+using MatrixExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
-using CameraBuddy;
-using GameTimer;
-using CollisionBuddy;
-using HadoukInput;
 using PrimitiveBuddy;
 using ResolutionBuddy;
-using MatrixExtensions;
 
 namespace CameraAndResolutionBuddiesSample
 {
