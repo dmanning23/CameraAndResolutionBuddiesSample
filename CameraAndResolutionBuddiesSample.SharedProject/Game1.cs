@@ -43,7 +43,10 @@ namespace CameraAndResolutionBuddiesSample
 		Texture2D _texture;
 		Primitive primitive;
 
-		Rectangle desired = new Rectangle(0, 0, 1280, 720);
+		/// <summary>
+		/// speed to move the circle
+		/// </summary>
+		const float circleMovementSpeed = 600.0f;
 
 		#endregion //Members
 
@@ -59,20 +62,27 @@ namespace CameraAndResolutionBuddiesSample
 			_circle2 = new Circle();
 
 			_clock = new GameClock();
-			_inputState = new InputState();
-			_controller = new ControllerWrapper(PlayerIndex.One, true);
-			_inputWrapper = new InputWrapper(_controller, _clock.GetCurrentTime);
-			_inputWrapper.Controller.UseKeyboard = true;
 
-#if DESKTOP
-			var resolution = new ResolutionComponent(this, graphics, new Point(1280, 720), new Point(1280, 720), false, true);
-#else
-			var resolution = new ResolutionComponent(this, graphics, new Point(1280, 720), new Point(1280, 720), false, true);
-#endif
+			//Setup the input for this game.
+			_inputState = new InputState();
+			Mappings.UseKeyboard[0] = true; //Set the first player to use the keyboard. 
+			_controller = new ControllerWrapper(0);
+			_inputWrapper = new InputWrapper(_controller, _clock.GetCurrentTime);
+
+
+			var resolution = new ResolutionComponent(this, 
+				graphics,
+				new Point(1280, 720), //The desired virtual resolution that items in the game will be drawn with
+				new Point(1280, 720), //The desired physical resolution to set the screen.
+				false, //Flag whether or not to fullscreen the app
+				true, //Flag whether or not to letterbox the app to fit the aspect ratio of virtual/screen resolutions.
+				false); //This flag can be used to set it to use the entire screen BUT without setting the Device.Fullscreen flag.
 
 			//set up the camera
 			_camera = new Camera();
-			_camera.WorldBoundary = desired;
+
+			//The WorldBoundary is a rectangle that the Camera will try to stay inside. When the circle moves out of this rectangle it will appear to go offscreen.
+			_camera.WorldBoundary = new Rectangle(0, 0, 1280, 720); 
 		}
 
 		/// <summary>
@@ -86,16 +96,16 @@ namespace CameraAndResolutionBuddiesSample
 			base.Initialize();
 
 			//init the blue circle so it will be on the left of the screen
-			_circle1.Initialize(new Vector2(graphics.GraphicsDevice.Viewport.TitleSafeArea.Center.X - 300,
-			                                graphics.GraphicsDevice.Viewport.TitleSafeArea.Center.Y), 60.0f);
+			_circle1.Initialize(new Vector2(Resolution.TitleSafeArea.Center.X - 300,
+											Resolution.TitleSafeArea.Center.Y), 60.0f);
 
 			//put the red circle on the right of the screen
-			_circle2.Initialize(graphics.GraphicsDevice.Viewport.TitleSafeArea.Center, 60.0f);
+			_circle2.Initialize(Resolution.TitleSafeArea.Center, 60.0f);
 
-			//Initiailze the camera to start with everything on screen
+			//Initialize the camera to start with everything on screen
 			AddCircleToCamera(_circle1);
 			AddCircleToCamera(_circle2);
-			_camera.BeginScene(true);
+			_camera.BeginScene(true); //Pass true to camera.BeginScene to force the camera to instnatly snap to the desired position.
 
 			_clock.Start();
 		}
@@ -135,27 +145,24 @@ namespace CameraAndResolutionBuddiesSample
 			_inputState.Update();
 			_inputWrapper.Update(_inputState, false);
 
-			//move the circle
-			float movespeed = 600.0f;
-
 			//check veritcal movement
 			if (_inputWrapper.Controller.CheckKeystrokeHeld(EKeystroke.Up))
 			{
-				_circle1.Translate(0.0f, -movespeed * _clock.TimeDelta);
+				_circle1.Translate(0.0f, -circleMovementSpeed * _clock.TimeDelta);
 			}
 			else if (_inputWrapper.Controller.CheckKeystrokeHeld(EKeystroke.Down))
 			{
-				_circle1.Translate(0.0f, movespeed * _clock.TimeDelta);
+				_circle1.Translate(0.0f, circleMovementSpeed * _clock.TimeDelta);
 			}
 
 			//check horizontal movement
 			if (_inputWrapper.Controller.CheckKeystrokeHeld(EKeystroke.Forward))
 			{
-				_circle1.Translate(movespeed * _clock.TimeDelta, 0.0f);
+				_circle1.Translate(circleMovementSpeed * _clock.TimeDelta, 0.0f);
 			}
 			else if (_inputWrapper.Controller.CheckKeystrokeHeld(EKeystroke.Back))
 			{
-				_circle1.Translate(-movespeed * _clock.TimeDelta, 0.0f);
+				_circle1.Translate(-circleMovementSpeed * _clock.TimeDelta, 0.0f);
 			}
 
 			//add camera shake when the two circles crash into each other
@@ -186,24 +193,20 @@ namespace CameraAndResolutionBuddiesSample
 		{
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
-#if WINDOWS
-			// Calculate Proper Viewport according to Aspect Ratio
-			Resolution.ResetViewport();
-#endif
-
-			//Add all our points to the camera
+			//1. Add all our points to the camera
 			AddCircleToCamera(_circle1);
 			AddCircleToCamera(_circle2);
 
-			//update all the matrices of the camera before we start drawing
+			//2. Update all the matrices of the camera before we start drawing
 			_camera.BeginScene(false);
 
 			spriteBatch.Begin(
 				SpriteSortMode.Deferred,
 				BlendState.NonPremultiplied,
 				null, null, null, null,
-				_camera.TranslationMatrix * Resolution.TransformationMatrix());
+				_camera.TranslationMatrix * Resolution.TransformationMatrix()); //3. MAGIC SAUCE: Multiply the Camera and Resolution matrixes to transform all the SpriteBatch.Draw calls.
 
+			//Draw the background image so that we can see the camera moving easier
 			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 
 			//draw the players circle in green
@@ -214,12 +217,12 @@ namespace CameraAndResolutionBuddiesSample
 
 			spriteBatch.End();
 
-			//Draw our gui!
+			//Start a new Spriteatch loop to draw our gui! 
 			spriteBatch.Begin(
 				SpriteSortMode.Deferred,
 				BlendState.NonPremultiplied,
 				null, null, null, null,
-				Resolution.TransformationMatrix());
+				Resolution.TransformationMatrix()); //Pass in the plain Resolution matrix so the GUI isn't transformed by the Camera.
 
 			primitive.Rectangle(Resolution.TitleSafeArea, Color.Red);
 
@@ -231,21 +234,22 @@ namespace CameraAndResolutionBuddiesSample
 			base.Draw(gameTime);
 		}
 
-		public void DrawCircleCenters()
-		{
-			var centerPosition1 = MatrixExt.Multiply(_camera.TranslationMatrix, _circle1.Pos);
-			primitive.Rectangle(Resolution.TitleSafeArea, Color.Red);
-			primitive.Circle(centerPosition1, 64, Color.White);
-		}
-
 		private void AddCircleToCamera(Circle myCircle)
 		{
 			float pad = (myCircle.Radius * 1.5f); //add a bit of padding so they aren't touching the edge of the screen
 
-			//Add the upperleft and lowercorners.  That will fit the whole circle in camera
+			//Add the upperleft and lowerright corners.  That will fit the whole circle in camera
 			_camera.AddPoint(myCircle.Pos);
 			_camera.AddPoint(new Vector2((myCircle.Pos.X - pad), (myCircle.Pos.Y - pad)));
 			_camera.AddPoint(new Vector2((myCircle.Pos.X + pad), (myCircle.Pos.Y + pad)));
+		}
+
+		public void DrawCircleCenters()
+		{
+			//This is a trick to draw bits of GUI over items that have been translated around by the CameraBuddy, for example if you want to draw a name over a character or something.
+
+			var centerPosition1 = MatrixExt.Multiply(_camera.TranslationMatrix, _circle1.Pos); //Use the MatrixExt to get a point that has been transformed by the camera matrix.
+			primitive.Circle(centerPosition1, 64, Color.White); //This circle will always be 64px but will be drawn on top of the circle. In theory. This math needs to be cleaned up :/
 		}
 
 		#endregion //Methods
